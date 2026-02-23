@@ -17,7 +17,7 @@ final class CategoryController extends AbstractController
     #[Route(name: 'app_category_index', methods: ['GET'])]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        // Puisqu'on veut afficher uniquement ses moyens de paiements, on va chercher les informations
+        // Puisqu'on veut afficher uniquement ses catégories, on va chercher les informations
         $user = $this->getUser();
 
         // Et au lieu de findAll, on va findBy avec l'id de l'utilisateur
