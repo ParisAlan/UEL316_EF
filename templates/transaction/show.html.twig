@@ -11,6 +11,14 @@
                 <th>Id</th>
                 <td>{{ transaction.id }}</td>
             </tr>
+            <tr>
+                    <th>Id Owner : </th>
+                    <td>{{ transaction.buyer.email }}</td>
+            </tr>
+            <tr>
+                <th>Méthode de paiement : </th>
+                <td>{{ transaction.paymentmethod.method }}</td>
+            </tr>
         </tbody>
     </table>
 

@@ -3,19 +3,30 @@
 {% block title %}Transaction index{% endblock %}
 
 {% block body %}
-    <h1>Transaction index</h1>
+    <h1>Vos transactions :</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>actions</th>
+                <th>Payeur :</th>
+                <th>Méthode de paiement :</th>
             </tr>
         </thead>
         <tbody>
         {% for transaction in transactions %}
             <tr>
                 <td>{{ transaction.id }}</td>
+                <td>{{ transaction.buyer.email }}</td>
+                <td>{{ transaction.paymentmethod.method }}</td>
+
+{#                MIS EN COMMENTAIRE CAR PAS FONCTIONNEL POUR LE MOMENT ET PAS LE TEMPS #}
+
+{#                {% for categories in transaction.category %}#}
+{#                    <td>{{ transaction.categories.name }}</td>#}
+{#                {% endfor %}#}
+
+
                 <td>
                     <a href="{{ path('app_transaction_show', {'id': transaction.id}) }}">show</a>
                     <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>
