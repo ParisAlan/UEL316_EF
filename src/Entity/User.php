@@ -41,9 +41,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'buyer')]
     private Collection $transactions;
 
+    /**
+     * @var Collection<int, PaymentMethod>
+     */
+    #[ORM\OneToMany(targetEntity: PaymentMethod::class, mappedBy: 'owner')]
+    private Collection $paymentMethods;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'owner')]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
+        $this->paymentMethods = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,6 +165,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($transaction->getBuyer() === $this) {
                 $transaction->setBuyer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PaymentMethod>
+     */
+    public function getPaymentMethods(): Collection
+    {
+        return $this->paymentMethods;
+    }
+
+    public function addPaymentMethod(PaymentMethod $paymentMethod): static
+    {
+        if (!$this->paymentMethods->contains($paymentMethod)) {
+            $this->paymentMethods->add($paymentMethod);
+            $paymentMethod->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentMethod(PaymentMethod $paymentMethod): static
+    {
+        if ($this->paymentMethods->removeElement($paymentMethod)) {
+            // set the owning side to null (unless already changed)
+            if ($paymentMethod->getOwner() === $this) {
+                $paymentMethod->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getOwner() === $this) {
+                $category->setOwner(null);
             }
         }
 

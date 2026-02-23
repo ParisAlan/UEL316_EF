@@ -24,6 +24,10 @@ class PaymentMethod
     #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'paymentmethod')]
     private Collection $transactions;
 
+    #[ORM\ManyToOne(inversedBy: 'paymentMethods')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $owner = null;
+
     public function __construct()
     {
         $this->transactions = new ArrayCollection();
@@ -72,6 +76,18 @@ class PaymentMethod
                 $transaction->setPaymentmethod(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): static
+    {
+        $this->owner = $owner;
 
         return $this;
     }
