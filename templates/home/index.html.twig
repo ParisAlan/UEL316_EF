@@ -11,10 +11,9 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/alanp/Desktop/UEL316_EF/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/alanp/Desktop/UEL316_EF/templates/home/index.html.twig</code></li>
-    </ul>
+    <h2>Voir ses transactions : <a href={{ path('app_transaction_index') }}>ici</a></h2>
+    <h2>Voir ses categories : <a href={{ path('app_category_index') }}>ici</a></h2>
+    <h2>Voir ses méthodes de paiement : <a href={{ path('app_payment_method_index') }}>ici</a></h2>
+
 </div>
 {% endblock %}
